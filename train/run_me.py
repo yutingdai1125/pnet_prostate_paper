@@ -17,7 +17,7 @@ from pipeline.one_split import OneSplitPipeline
 from pipeline.crossvalidation_pipeline import CrossvalidationPipeline
 from pipeline.LeaveOneOut_pipeline import LeaveOneOutPipeline
 
-os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'#设置选项允许重复加载动态链接库。
 
 random_seed = 234
 random.seed(random_seed)
