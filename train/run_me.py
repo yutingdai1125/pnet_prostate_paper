@@ -100,6 +100,7 @@ for params_file in params_file_list:
     params_file_full = params_file + '.py'
     print params_file_full
     params = imp.load_source(params_file, params_file_full)
+    #imp.load_source(name,pathname[,file])的作用把源文件pathname导入到name模块中，name可以是自定义的名字或者内置的模块名称。
 
     DebugFolder(log_dir)
     if params.pipeline['type'] == 'one_split':
