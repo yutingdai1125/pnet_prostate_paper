@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 from config_path import *
-
+#from…import *：是把一个模块中所有函数都导入进来; 相当于导入的是一个文件夹中所有文件，所有函数都是绝对路径。
 data_path = DATA_PATH
 processed_path = join(PROSTATE_DATA_PATH, 'processed')
 
