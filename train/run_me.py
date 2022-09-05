@@ -101,8 +101,10 @@ for params_file in params_file_list:
     print params_file_full
     params = imp.load_source(params_file, params_file_full)
     #imp.load_source(name,pathname[,file])的作用把源文件pathname导入到name模块中，name可以是自定义的名字或者内置的模块名称。
+    #params 调用了onsplit_average_reg_10_tanh_large_testing.py文件中的参数，其中模型参数来自model.builders.prostate_models.build_pnet2。
 
     DebugFolder(log_dir)
+    #params.pipeline['type'] == 'one_split'，故运行第一种情况，调用OneSplitPipeline类，来自pipeline.one_split
     if params.pipeline['type'] == 'one_split':
         pipeline = OneSplitPipeline(task=params.task, data_params=params.data, model_params=params.models,
                                     pre_params=params.pre, feature_params=params.features,
@@ -123,6 +125,7 @@ for params_file in params_file_list:
                                        model_params=params.models, pre_params=params.pre,
                                        pipeline_params=params.pipeline, exp_name=log_dir)
     start = timeit.default_timer()
+    #此步为关键步骤，进行模型的训练。pipeline.run()输出包括epoch1——300，来自
     pipeline.run()
     stop = timeit.default_timer()
     mins, secs = elapsed_time(start, stop)
