@@ -8,7 +8,7 @@ from config_path import *
 data_path = DATA_PATH
 processed_path = join(PROSTATE_DATA_PATH, 'processed')
 
-# use this one
+# use this one  定义所使用的文件名
 gene_final_no_silent_no_intron = 'P1000_final_analysis_set_cross__no_silent_no_introns_not_from_the_paper.csv'
 cnv_filename = 'P1000_data_CNA_paper.csv'
 response_filename = 'response_paper.csv'
