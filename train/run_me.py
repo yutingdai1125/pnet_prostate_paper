@@ -125,7 +125,7 @@ for params_file in params_file_list:
                                        model_params=params.models, pre_params=params.pre,
                                        pipeline_params=params.pipeline, exp_name=log_dir)
     start = timeit.default_timer()
-    #此步为关键步骤，进行模型的训练。pipeline.run()输出包括epoch1——300，来自
+    #此步为关键步骤，进行模型的训练。pipeline.run()输出包括epoch1——300，run的定义来自LeaveOneOut_pipeline.py的类LeaveOneOut_pipeline（继承了类OneSplitPipeline）
     pipeline.run()
     stop = timeit.default_timer()
     mins, secs = elapsed_time(start, stop)
