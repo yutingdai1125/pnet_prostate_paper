@@ -297,6 +297,7 @@ class ProstateDataPaper():
             for t in data_type:
                 x, y, rows, cols = load_data_type(t, cnv_levels, cnv_filter_single_event, mut_binary, selected_genes)
                 x_list.append(x), y_list.append(y), rows_list.append(rows), cols_list.append(cols)
+                #append() 方法用于在列表末尾添加新的对象。
             x, y, rows, cols = combine(x_list, y_list, rows_list, cols_list, data_type, combine_type,
                                        use_coding_genes_only)
             x = pd.DataFrame(x, columns=cols)
