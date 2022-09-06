@@ -35,6 +35,7 @@ class Data():
 
     def get_relevant_features(self):
         if hasattr(self.data_reader, 'relevant_features'):
+            #hasattr() 函数用于判断对象是否包含对应的属性。
             return self.data_reader.get_relevant_features()
         else:
             return None
