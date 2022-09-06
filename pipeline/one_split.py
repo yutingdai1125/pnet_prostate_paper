@@ -140,7 +140,7 @@ class OneSplitPipeline:
                 y_t = y_validate_
                 info_t = info_validate_
             else:
-                x_t = np.concatenate((x_test_, x_validate_))
+                x_t = np.concatenate((x_test_, x_validate_))#concatenate((a1, a2, …), axis=0)数组拼接函数。参数:a1,a2……为要拼接的数组，axis为在哪个维度上进行拼接，默认为0，即为按列拼接
                 y_t = np.concatenate((y_test_, y_validate_))
                 info_t = info_test_.append(info_validate_)
 
