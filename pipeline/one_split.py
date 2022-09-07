@@ -152,7 +152,7 @@ class OneSplitPipeline:
             x_train, x_test = self.preprocess(x_train, x_t)
             for m in self.model_params:
                 # get model
-                model_params_ = deepcopy(m)
+                model_params_ = deepcopy(m)#深复制，即将被复制对象完全再复制一遍作为独立的新个体单独存在。所以改变原有被复制对象不会对已经复制出来的新对象产生影响。
                 set_random_seeds(random_seed=20080808)
                 model = get_model(model_params_)
                 logging.info('fitting')
