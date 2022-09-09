@@ -184,7 +184,12 @@ def build_pnet2(optimizer, w_reg, w_reg_outcomes, add_unk_genes=True, sparse=Tru
         loss_weights = [loss_weights] * n_outputs
 
     print 'loss_weights', loss_weights
+    
     ###########  compile：指定模型训练时的参数
+    ## optimizer：模型的优化方法，可选的有Adadelta, Adagrad, Adam, Adamax, FTRL, NAdam
+    ## loss：模型的损失函数，如binary_crossentropy，CategoricalCrossentropy等
+    ## metrics：训练和评价模型时使用的评价指标，同样可以传递一个全局使用的评价指标或者为每一个输出指定一个独立的评价指标， 可能出现的形式有：metrics=['accuracy']，metrics={'output_a': 'accuracy', 'output_b': ['accuracy', 'mse']}
+    ## loss_weights：一个可选参数，为列表或者字典类型，指定每个输出在计算各自损失时的权重。模型的最终输出为每个输出对应的损失值的加权平均。这是针对单个样本的损失来说的，指定这个参数，是为了在单个样本输入时，对样本的损失在每个损失指标上进行加权求和。
     model.compile(optimizer=optimizer,
                   loss=['binary_crossentropy'] * n_outputs, metrics=[f1], loss_weights=loss_weights)
 
