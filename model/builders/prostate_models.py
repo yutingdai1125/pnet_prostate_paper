@@ -134,7 +134,9 @@ def build_pnet2(optimizer, w_reg, w_reg_outcomes, add_unk_genes=True, sparse=Tru
         genes = cols
 
     ins = Input(shape=(n_features,), dtype='float32', name='inputs')
-
+    
+    
+    ############此步为得到网络输出
     outcome, decision_outcomes, feature_n = get_pnet(ins,
                                                      features=features,
                                                      genes=genes,
@@ -168,6 +170,7 @@ def build_pnet2(optimizer, w_reg, w_reg_outcomes, add_unk_genes=True, sparse=Tru
     else:
         outcome = decision_outcomes[-1]
 
+    #########首先定义好网络，再将网络的输入和输出部分作为参数定义一个Model类对象，此处输入是 ins，输出是outcome
     model = Model(input=[ins], output=outcome)
 
     if type(outcome) == list:
@@ -181,6 +184,7 @@ def build_pnet2(optimizer, w_reg, w_reg_outcomes, add_unk_genes=True, sparse=Tru
         loss_weights = [loss_weights] * n_outputs
 
     print 'loss_weights', loss_weights
+    ###########  compile：指定模型训练时的参数
     model.compile(optimizer=optimizer,
                   loss=['binary_crossentropy'] * n_outputs, metrics=[f1], loss_weights=loss_weights)
 
