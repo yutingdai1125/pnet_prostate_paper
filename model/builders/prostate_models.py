@@ -127,7 +127,7 @@ def build_pnet2(optimizer, w_reg, w_reg_outcomes, add_unk_genes=True, sparse=Tru
 
     logging.info('x shape {} , y shape {} info {} genes {}'.format(x.shape, y.shape, info.shape, cols.shape))
 
-    n_features = x.shape[1] ### shape[1]输出列数，[0]输出行数
+    n_features = x.shape[1] ### shape[1]输出列数（基因数），[0]输出行数（样本数）
 
     if hasattr(cols, 'levels'):
         genes = cols.levels[0]
@@ -135,8 +135,11 @@ def build_pnet2(optimizer, w_reg, w_reg_outcomes, add_unk_genes=True, sparse=Tru
         genes = cols
 
     ins = Input(shape=(n_features,), dtype='float32', name='inputs')
-    
-    
+    #  Input初始化深度学习网络输入层的tensor，用来实例化一个keras张量
+    #  shape: 形状元组（整型），不包括batch size。for instance, shape=(32,) 表示了预期的输入将是一批32维的向量。
+    #  dtype: 预期的输入数据类型
+    #  name: 对于该层是可选的名字字符串。在一个模型中是独一无二的（同一个名字不能复用2次）。如果name没有被特指将会自动生成。
+
     ############此步为得到网络输出
     outcome, decision_outcomes, feature_n = get_pnet(ins,
                                                      features=features,
@@ -185,7 +188,12 @@ def build_pnet2(optimizer, w_reg, w_reg_outcomes, add_unk_genes=True, sparse=Tru
         loss_weights = [loss_weights] * n_outputs
 
     print 'loss_weights', loss_weights
+    
     ###########  compile：指定模型训练时的参数
+    #  optimizer：优化器，用于控制梯度裁剪。必选项
+    #  loss：损失函数（或称目标函数、优化评分函数）。必选项
+    #  metrics：评价函数用于评估当前训练模型的性能。当模型编译后（compile），评价函数应该作为 metrics 的参数来输入。评价函数和损失函数相似，只不过评价函数的结果不会用于训练过程中。
+    #  loss_weights:可选项,是一个list或字典,指定不同的损失的系数。
     model.compile(optimizer=optimizer,
                   loss=['binary_crossentropy'] * n_outputs, metrics=[f1], loss_weights=loss_weights)
 
