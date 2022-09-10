@@ -113,11 +113,12 @@ def build_pnet2(optimizer, w_reg, w_reg_outcomes, add_unk_genes=True, sparse=Tru
     print 'n_hidden_layers', n_hidden_layers
     data = Data(**data_params)
     x, y, info, cols = data.get_data()
+    ## x 是union后的输入文件，y 是标签，info 是样本名索引，cols是列（基因）索引
     print x.shape
     print y.shape
     print info.shape
     print cols.shape
-    features = cols
+    features = cols  ## features即基因
     if loss == 'binary_crossentropy':
         activation_decision = 'sigmoid'
     else:
@@ -126,7 +127,7 @@ def build_pnet2(optimizer, w_reg, w_reg_outcomes, add_unk_genes=True, sparse=Tru
 
     logging.info('x shape {} , y shape {} info {} genes {}'.format(x.shape, y.shape, info.shape, cols.shape))
 
-    n_features = x.shape[1]
+    n_features = x.shape[1] ### shape[1]输出列数，[0]输出行数
 
     if hasattr(cols, 'levels'):
         genes = cols.levels[0]
@@ -184,12 +185,7 @@ def build_pnet2(optimizer, w_reg, w_reg_outcomes, add_unk_genes=True, sparse=Tru
         loss_weights = [loss_weights] * n_outputs
 
     print 'loss_weights', loss_weights
-    
     ###########  compile：指定模型训练时的参数
-    ## optimizer：模型的优化方法，可选的有Adadelta, Adagrad, Adam, Adamax, FTRL, NAdam
-    ## loss：模型的损失函数，如binary_crossentropy，CategoricalCrossentropy等
-    ## metrics：训练和评价模型时使用的评价指标，同样可以传递一个全局使用的评价指标或者为每一个输出指定一个独立的评价指标， 可能出现的形式有：metrics=['accuracy']，metrics={'output_a': 'accuracy', 'output_b': ['accuracy', 'mse']}
-    ## loss_weights：一个可选参数，为列表或者字典类型，指定每个输出在计算各自损失时的权重。模型的最终输出为每个输出对应的损失值的加权平均。这是针对单个样本的损失来说的，指定这个参数，是为了在单个样本输入时，对样本的损失在每个损失指标上进行加权求和。
     model.compile(optimizer=optimizer,
                   loss=['binary_crossentropy'] * n_outputs, metrics=[f1], loss_weights=loss_weights)
 
