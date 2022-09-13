@@ -60,7 +60,7 @@ def get_layers_from_net(net, n_levels):
         layers.append(dict)
     return layers
 
-
+##########load三个输入文件，reactome数据库信息
 class Reactome():
 
     def __init__(self):
@@ -86,7 +86,7 @@ class Reactome():
         df.columns = ['child', 'parent']
         return df
 
-
+########根据父子关系构建网络连接
 class ReactomeNetwork():
 
     def __init__(self):
@@ -102,7 +102,7 @@ class ReactomeNetwork():
         roots = get_nodes_at_level(self.netx, distance=1)
         return roots
 
-    # get a DiGraph representation of the Reactome hierarchy
+    # get a DiGraph representation of the Reactome hierarchy  有向图表示
     def get_reactome_networkx(self):
         if hasattr(self, 'netx'):
             return self.netx
@@ -110,6 +110,8 @@ class ReactomeNetwork():
         # filter hierarchy to have human pathways only
         human_hierarchy = hierarchy[hierarchy['child'].str.contains('HSA')]
         net = nx.from_pandas_edgelist(human_hierarchy, 'child', 'parent', create_using=nx.DiGraph())
+        #######只希望读入指定列的数据时，先将指定列读入为DataFrame结构的数据，再将其通过nx.from_pandas_edgelist读入为图
+        #######create_using为创建的图的类型（有向图，无向图等）
         net.name = 'reactome'
 
         # add root node
